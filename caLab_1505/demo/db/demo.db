@@ -1,0 +1,152 @@
+record(ao, "caLab:double1")
+{
+    field(DESC, "Double output with range infos")
+    field(EGU, "mm")
+    field(HOPR, "10")
+    field(LOPR, "0")
+    field(HIHI, "8")
+    field(HIGH, "6")
+    field(LOW, "4")
+    field(LOLO, "2")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+    field(LSV, "MINOR")
+    field(LLSV, "MAJOR")
+    field (PINI, "YES")
+}
+record(ao, "caLab:double2")
+{
+    field(DESC, "Double output without range infos")
+    field(EGU, "nm")
+    field (PINI, "YES")
+}
+record(longout, "caLab:long")
+{
+    field(DESC, "Long output without range infos")
+    field(EGU, "m")
+    field (PINI, "YES")
+}
+record(stringout, "caLab:string")
+{
+    field(DESC, "String output without range infos")
+    field (PINI, "YES")
+}
+record(waveform, "caLab:waveDouble")
+{
+    field(DESC, "Double waveform record")
+    field(NELM, 200)
+    field(FTVL, "DOUBLE")
+    field(EGU, "mm")
+    field (PINI, "YES")
+}
+record(waveform, "caLab:waveLong")
+{
+    field(DESC, "Long waveform record")
+    field(NELM, 2048)
+    field(FTVL, "LONG")
+    field(EGU, "m")
+    field (PINI, "YES")
+}
+record(waveform, "caLab:waveString")
+{
+    field(DESC, "String waveform record")
+    field(NELM, 48)
+    field(FTVL, "STRING")
+    field (PINI, "YES")
+}
+record(waveform, "caLab:waveShort")
+{
+    field(DESC, "Short waveform record")
+    field(NELM, 200)
+    field(FTVL, "SHORT")
+    field(EGU, "mm")
+    field (PINI, "YES")
+}
+record(waveform, "caLab:waveChar")
+{
+    field(DESC, "Char waveform record")
+    field(NELM, 200)
+    field(FTVL, "CHAR")
+    field(EGU, "mm")
+    field (PINI, "YES")
+}
+record(ai, "caLab:aiExample")
+{
+    field(DESC, "Analog input")
+    field(INP, "caLab:calcExample.VAL  NPP NNS")
+    field(EGU, "Counts")
+    field(HOPR, "10")
+    field(LOPR, "0")
+    field(HIHI, "8")
+    field(HIGH, "6")
+    field(LOW, "4")
+    field(LOLO, "2")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+    field(LSV, "MINOR")
+    field(LLSV, "MAJOR")
+    field (PINI, "YES")
+}
+record(calc, "caLab:calcExample")
+{
+    field(DESC, "Counter")
+    field(SCAN, "1 second")
+    field(FLNK, "caLab:aiExample")
+    field(CALC, "(A<B)?(A+C):D")
+    field(INPA, "caLab:calcExample.VAL  NPP NNS")
+    field(INPB, "9")
+    field(INPC, "1")
+    field(INPD, "0")
+    field(EGU, "Counts")
+    field(HOPR, "10")
+    field(LOPR, "0")
+    field(HIHI, "8")
+    field(HIGH, "6")
+    field(LOW, "4")
+    field(LOLO, "2")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+    field(LSV, "MINOR")
+    field(LLSV, "MAJOR")
+}
+
+# ein BI Record
+record(bi,"caLab:bi") {
+    field(DESC,"bi - bool input")
+    field(ZNAM,"ok")
+    field(ONAM,"warning")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MINOR")
+    field (PINI, "YES")
+}
+
+# eine Sringvariable
+record(stringin,"caLab:stringin") {
+    field(DESC,"stringin")
+    field (PINI, "YES")
+}
+
+
+# ein Multi-Bit-Binary Record bzw. ein Bitfeld (bis zu 16 Bit)
+# wird mit Integer beschrieben und kann als Einzelbits im Dm2k
+# dargestellt werden
+record(mbbi,"caLab:mbbi") {	
+    field(DESC,"mbbi")
+    field(ZRST,"0")
+    field(ONST,"bit 0")
+    field(TWST,"bit 1")
+    field(THST,"bit 0+1")
+    field(FRST,"bit 2")
+    field(FVST,"bit 2+0")
+    field(SXST,"bit 2+1")
+    field(SVST,"bit 2+1+0")
+    field(ZRSV,"NO_ALARM")
+    field(ONSV,"NO_ALARM")
+    field(TWSV,"NO_ALARM")
+    field(THSV,"MAJOR")
+    field(FRSV,"NO_ALARM")
+    field(FVSV,"MAJOR")
+    field(SXSV,"MAJOR")
+    field(SVSV,"MAJOR")
+    field (PINI, "YES")
+}
