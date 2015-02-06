@@ -17,12 +17,12 @@ LIBRARY_IOC += CALab
 # install CALab.dbd into <top>/dbd
 #DBD += CALab.dbd
 
-USR_CXXFLAGS += -DCALAB_EXPORTS -DWIN32 -I$(LABVIEWDIR)/cintools
+USR_CXXFLAGS_WIN32 += -DCALAB_EXPORTS -DWIN32 -I$(LABVIEWDIR)/cintools
 
 # specify all source files to be compiled and added to the library
 CALab_SRCS += caLab.cpp
 
-#CALab_RCS += caLab.rc   # missing .ico files
+#CALab_RCS_WIN32 += caLab.rc   # missing .ico files
 
 USR_LDFLAGS_WIN32 += /LIBPATH:$(LABVIEWDIR)/cintools
 
