@@ -33,6 +33,9 @@
 #include <string.h>
 #include <string.h>
 #include <time.h>
+#ifdef _WIN32
+#include <io.h>
+#endif /* _WIN32 */
 
 //#define STOPWATCH
 #define DLL_PROCESS_ATTACH  1
@@ -3250,17 +3253,27 @@ extern "C" EXPORT uInt32 getCounter() {
 
 // Prepare the library before first using
 void caLabLoad(void) {
+	char buffer[256];
+	const char* access_mode = "w";
 	if(getenv("CALAB_POLLING")) {
 		bCaLabPolling = true;
 	} else {
 		bCaLabPolling = false;
+	}
+	// If c:/data/log exists assume we are an ISIS instrument and hide debug message window
+	if( !getenv("CALAB_NODBG") ) {
+		if ( access("c:/data/log", 0) == 0 ) {
+			access_mode = "a";
+			strftime(buffer, sizeof(buffer), "CALAB_NODBG=c:/data/log/CALab-%Y%m%d.log", localtime(NULL));
+			putenv(strdup(buffer));
+		}
 	}
 	if(getenv("CALAB_NODBG")) {
 		size_t size = strlen(getenv("CALAB_NODBG"));
 		szCaLabDbg = (char*)realloc(szCaLabDbg, ++size*sizeof(char));
 		if(szCaLabDbg)
 			strncpy_s(szCaLabDbg, size, getenv("CALAB_NODBG"), size);
-		pFile = fopen(szCaLabDbg,"w");
+		pFile = fopen(szCaLabDbg,access_mode);
 	} else {
 		szCaLabDbg = 0x0;
 	}
