@@ -3253,7 +3253,6 @@ extern "C" EXPORT uInt32 getCounter() {
 
 // Prepare the library before first using
 void caLabLoad(void) {
-	char buffer[256];
 	const char* access_mode = "w";
 	if(getenv("CALAB_POLLING")) {
 		bCaLabPolling = true;
@@ -3263,9 +3262,12 @@ void caLabLoad(void) {
 	// If c:/data/log exists assume we are an ISIS instrument and hide debug message window
 	if( !getenv("CALAB_NODBG") ) {
 		if ( access("c:/data/log", 0) == 0 ) {
+			char* buffer = new char[256];  // need this on heap as putenv keeps original string
+	        time_t now;
+		    time(&now);
+			strftime(buffer, 256, "CALAB_NODBG=c:/data/log/CALab-%Y%m%d.log", localtime(&now));
+			putenv(buffer);
 			access_mode = "a";
-			strftime(buffer, sizeof(buffer), "CALAB_NODBG=c:/data/log/CALab-%Y%m%d.log", localtime(NULL));
-			putenv(strdup(buffer));
 		}
 	}
 	if(getenv("CALAB_NODBG")) {
