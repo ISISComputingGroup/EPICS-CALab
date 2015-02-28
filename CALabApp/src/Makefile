@@ -12,6 +12,12 @@ SRC_DIRS += $(TOP)/caLab_1505/src
 
 LIBRARY_IOC += CALab
 
+ifeq (WIN32,$(OS_CLASS))
+LABVIEWDIR=$(subst /,\,$(ICPBINARYDIR)/LabVIEW/2010_x64)
+else
+LABVIEWDIR=$(ICPBINARYDIR)/Labview
+endif
+
 # xxxRecord.h will be created from xxxRecord.dbd
 #DBDINC += xxxRecord
 # install CALab.dbd into <top>/dbd
