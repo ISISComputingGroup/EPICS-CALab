@@ -170,6 +170,9 @@ typedef struct {
 #pragma pack(pop)
 #endif
 
+// not needed on base 3.15
+#ifdef VERSION_INT
+
 enum epicsAlarmSeverity {
 	epicsSevNone = NO_ALARM,
 	epicsSevMinor,
@@ -203,6 +206,8 @@ enum epicsAlarmCondition {
 	epicsAlarmWriteAccess,
 	ALARM_NSTATUS
 };
+
+#endif
 
 struct cmp_str
 {
