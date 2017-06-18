@@ -23,6 +23,7 @@
 #include <envDefs.h>
 #include <epicsMath.h>
 #include <epicsStdio.h>
+#include <epicsVersion.h>
 #include <extcode.h>
 #include <limits.h>
 #include <malloc.h>
@@ -171,7 +172,7 @@ typedef struct {
 #endif
 
 // not needed on base 3.15
-#ifdef VERSION_INT
+#ifndef VERSION_INT
 
 enum epicsAlarmSeverity {
 	epicsSevNone = NO_ALARM,
