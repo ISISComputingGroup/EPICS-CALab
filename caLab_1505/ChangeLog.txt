@@ -1,4 +1,42 @@
-﻿Change-log of CA Lab 
+Change-log of CA Lab
+V1.6.0.10 (Released: June 2018)
+  # PV names can use 60 characters now
+  # constantly changing PV names can be used again (input connector
+    'variable PV names' must be set true)
+    Remark: You will get better performance without this option
+
+----------------------------------------------------------------------
+V1.6.0.9 (Released: March 2018)
+  # fixed multithreaded write values
+  # fixed default input type for name in "CaLabPut.vi"
+  # corrected "Event Demo.vi"
+
+----------------------------------------------------------------------
+V1.6.0.8 (Released: March 2018)
+  + "CaLabDisconnect.vi": Now you can disconnect several or all
+     EPICS variables from network without closing all CaLab-VIs
+  + "CaLabInit.vi": Now you can initialize Channel Access Variables
+     before using in "CaLabGet.vi" and "CaLabPut.vi"
+  + Field values with enums are displayed with correct enum string now
+  # EPICS base 3.14.12.7
+  # Update of online documentation
+  # Online documentation moved to http://hz-b.de/calab
+  - Input "ValueSetsInColums" removed
+  ! Please, replace old CA Lab VIs! The new VIs fit into old structures.
+
+----------------------------------------------------------------------
+V1.5.1.0 (Released: January 2016)
+  + CaLabGet.vi: added optional parameter NoMDEL
+                 NoMEL=true -> ignore monitor dead-band
+                            -> deactivated caching of values
+  - CaLabGet.vi: connector "Initialize" removed
+  # CaLabEvent.vi: restart issues fixed
+  # EPICS base 3.14.12.5
+  # VI versioning started
+  # Update of examples
+  # Update of online documentation
+
+---------------------------------------------------------------------- 
 V1.5.0.5 (Released: August 2014) 
   + Environment variable for redirecting debug window output to a file
         CALAB_NODBG = PATH_NAME_OF_LOG_FILE

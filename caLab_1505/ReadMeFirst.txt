@@ -70,16 +70,17 @@ All provided VIs depend on correct set absolute path to "caLab.dll", "ca.dll"
 and "com.dll". This libraries are in subfolder "lib". You can navigate from
 Start->Programs->National Instruments->caLab->"CA Lab project" to file "path.txt"
 to get the right path.
-This file contains the needed path for "caLabGet01.vi", "caLabGet02.vi",
-"caLabEvent.vi" and "caLabPutAny.vi".
+This file contains the needed path for "CaLabGet.vi", "CaLabPut.vi", ...
 
 --- 3.3 Problems to create an executable with the Application Builder
 
 If you have problems to create a working executable with the Application Builder
 change target folder from user.lib to another target (sometimes only root works).
-Following libraries and services are needed by CA Lab: caLab.dll, ca.dll, Com.dll,
-caRepeater.exe, msvcp100.dll (windows\system32), msvcr100.dll (windows\system32).
+Following libraries and services are needed by CA Lab: caLab.dll, caLabIoc.dll, ca.dll, Com.dll,
+caRepeater.exe, msvcp100.dll (windows\system32), msvcr100.dll (windows\system32),
+vcruntime140.dll (windows\system32), msvcp140.dll (windows\system32).
 Environment variable PATH needs to be set to this files.
+If you have problems with dependencies you should install CA Lab at target computer.
 
 --- 3.4 Problems after installing new CA Lab version
 

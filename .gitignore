@@ -12,3 +12,5 @@ runIOC.bat
 runIOC.sh
 relPaths.sh
 .project
+/CALabApp/
+/configure/
