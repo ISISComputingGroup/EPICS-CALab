@@ -1,4 +1,4 @@
-Change-log of CA Lab
+﻿Change-log of CA Lab
 V1.6.0.10 (Released: June 2018)
   # PV names can use 60 characters now
   # constantly changing PV names can be used again (input connector
