@@ -15,7 +15,8 @@
 *.dbd text
 *.template text
 *.substitutions text
-
+*.rc txt
+*.txt text
 # Declare files that will always have CRLF line endings on checkout.
 *.sln text eol=crlf
 
@@ -24,5 +25,7 @@
 *.jpg binary
 *.class binary
 *.vi binary
+*.lvlib binary
+*.lvlps binary
+*.lvproj binary
 *.ctl binary
-
