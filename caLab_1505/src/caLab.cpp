@@ -12,6 +12,9 @@
 #include <vector>
 #include <map>
 
+#include <epicsVersion.h>
+#include <dbDefs.h>
+ 
 #if defined WIN32 || defined WIN64
 #include <alarm.h>
 #include <alarmString.h>
@@ -469,7 +472,8 @@ dbr_size_t dbr_size = 0x0;
 ((unsigned)((COUNT)<=0?dbr_size[TYPE]:dbr_size[TYPE]+((COUNT)-1)*dbr_value_size[TYPE]))
 
 #endif
-#define MAX_NAME_SIZE 61
+
+#define MAX_NAME_SIZE (PVNAME_STRINGSZ) /* from epics base */ 
 
 MgErr DeleteStringArray(sStringArrayHdl array);
 void DbgTime(void);
