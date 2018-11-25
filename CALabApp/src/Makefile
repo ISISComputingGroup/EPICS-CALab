@@ -31,8 +31,15 @@ USR_LDFLAGS_WIN32 += /LIBPATH:$(LABVIEWDIR)/cintools
 caLab_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 caLab_SYS_LIBS_WIN32 += labview user32
+# these are needed for DLL build on static EPICS target
+caLab_SYS_LIBS_WIN32 += ws2_32 dbghelp advapi32
 
 #===========================
+
+# build a shared library on a static build
+ifeq ($(STATIC_BUILD),YES)
+BIN_INSTALLS += $(SHRLIB_PREFIX)caLab$(SHRLIB_SUFFIX) $(SHRLIB_PREFIX)caLabIoc$(SHRLIB_SUFFIX)
+endif
 
 include $(TOP)/configure/RULES
 #----------------------------------------
