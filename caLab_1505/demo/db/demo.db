@@ -1669,13 +1669,6 @@ record(waveform, "caLab:waveString200")
     field(FTVL, "STRING")
     field(PINI, "YES")
 }
-record(waveform, "caLab:waveString200")
-{
-    field(DESC, "String waveform record")
-    field(NELM, 200)
-    field(FTVL, "STRING")
-    field(PINI, "YES")
-}
 record(waveform, "caLab:waveString201")
 {
     field(DESC, "String waveform record")

@@ -10,7 +10,7 @@ include $(TOP)/configure/CONFIG
 
 SRC_DIRS += $(TOP)/caLab_1505/src
 
-LIBRARY_IOC += CALab
+LIBRARY_IOC += caLab caLabIoc
 
 ifeq (WIN32,$(OS_CLASS))
 LABVIEWDIR=$(subst /,\,$(ICPBINARYDIR)/LabVIEW/2010_x64)
@@ -18,23 +18,19 @@ else
 LABVIEWDIR=$(ICPBINARYDIR)/Labview
 endif
 
-# xxxRecord.h will be created from xxxRecord.dbd
-#DBDINC += xxxRecord
-# install CALab.dbd into <top>/dbd
-#DBD += CALab.dbd
-
 USR_CXXFLAGS_WIN32 += -DCALAB_EXPORTS -DWIN32 -I$(LABVIEWDIR)/cintools
 
 # specify all source files to be compiled and added to the library
-CALab_SRCS += caLab.cpp
+caLab_SRCS += caLab.cpp
+caLabIoc_SRCS += caLabIoc.cpp
 
-#CALab_RCS_WIN32 += caLab.rc   # missing .ico files
+#caLab_RCS_WIN32 += caLab.rc   # missing .ico files
 
 USR_LDFLAGS_WIN32 += /LIBPATH:$(LABVIEWDIR)/cintools
 
-CALab_LIBS += $(EPICS_BASE_IOC_LIBS)
+caLab_LIBS += $(EPICS_BASE_IOC_LIBS)
 
-CALab_SYS_LIBS_WIN32 += labview user32
+caLab_SYS_LIBS_WIN32 += labview user32
 
 #===========================
 
@@ -42,3 +38,25 @@ include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
 
+# special rule to build a DLL from a static compile, taken from standard EPICS DLL build rules.
+# it builds the DLL, but the as the DLL build creates an import library that overwrites the static library 
+# prviously made. we don't need the static or import library here, but create the import library 
+# under another name for completeness
+ifeq ($(STATIC_BUILD),YES)
+$(SHRLIB_PREFIX)caLab$(SHRLIB_SUFFIX) : $(SHRLIB_PREFIX)%$(SHRLIB_SUFFIX): $(LIB_PREFIX)%$(LIB_SUFFIX)
+	@$(RM) $@
+ifeq ($(SHRLIB_SUFFIX),.dll)
+	$(LINK.shrlib) /implib:caLab_dll.lib
+	$(MT_DLL_COMMAND)
+else
+	$(LINK.shrlib)
+endif
+$(SHRLIB_PREFIX)caLabIoc$(SHRLIB_SUFFIX) : $(SHRLIB_PREFIX)%$(SHRLIB_SUFFIX): $(LIB_PREFIX)%$(LIB_SUFFIX)
+	@$(RM) $@
+ifeq ($(SHRLIB_SUFFIX),.dll)
+	$(LINK.shrlib) /implib:caLabIoc_dll.lib
+	$(MT_DLL_COMMAND)
+else
+	$(LINK.shrlib)
+endif
+endif

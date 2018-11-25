@@ -21,6 +21,7 @@
 #include <cadef.h>
 #include <envDefs.h>
 #include <epicsStdio.h>
+#include <io.h>
 #define EXPORT __declspec(dllexport)
 #else
 #include <dlfcn.h>
@@ -473,7 +474,7 @@ dbr_size_t dbr_size = 0x0;
 
 #endif
 
-#define MAX_NAME_SIZE (PVNAME_STRINGSZ) /* from epics base */ 
+#define MAX_NAME_SIZE (PVNAME_STRINGSZ) /* from EPICS base dbDefs.h */ 
 
 MgErr DeleteStringArray(sStringArrayHdl array);
 void DbgTime(void);
@@ -3096,6 +3097,7 @@ void loadFunctions() {
 // prepare the library before first using
 void caLabLoad(void) {
 	char *pValue;
+	const char* access_mode = "w";
 	size_t len = 0;
 	if (pcac)
 		return;
@@ -3106,13 +3108,24 @@ void caLabLoad(void) {
 	else {
 		bCaLabPolling = false;
 	}
+    // If c:/data/log exists assume we are an ISIS instrument and hide debug message window
+	if( !getenv("CALAB_NODBG") ) {
+		if ( access("c:/data/log", 0) == 0 ) {
+			char* buffer = new char[256];  // need this on heap as putenv keeps original string
+	        time_t now;
+		    time(&now);
+			strftime(buffer, 256, "CALAB_NODBG=c:/data/log/caLab-%Y%m%d.log", localtime(&now));
+			putenv(buffer);
+			access_mode = "a";
+		}
+	}
 	if (getenv("CALAB_NODBG")) {
 		len = strlen(getenv("CALAB_NODBG")) + 1;
 		pValue = (char*)malloc(len * sizeof(char));
 		if (len > 3) {
 			if (pValue)
 				strncpy(pValue, getenv("CALAB_NODBG"), len);
-			pCaLabDbgFile = fopen(pValue, "w");
+			pCaLabDbgFile = fopen(pValue, access_mode);
 		}
 		free(pValue);
 	}

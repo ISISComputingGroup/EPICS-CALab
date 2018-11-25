@@ -20,9 +20,11 @@
 // Definitions
 #include <extcode.h>
 #include <windows.h>
+#include <tchar.h>
 #include <TlHelp32.h>
 #include <stdio.h>
-#define MAX_STRING_SIZE     40
+#include <dbDefs.h>
+#define MAX_NAME_SIZE (PVNAME_STRINGSZ) /* from EPICS base dbDefs.h  */ 
 #ifdef WIN32
 #define EXPORT __declspec(dllexport)
 #else
@@ -49,6 +51,9 @@ static bool ProcessByName(wchar_t* wcProcessFileName, bool kill) {
     HANDLE hProcessSnap;
     HANDLE hProcess;
     PROCESSENTRY32 pe32;
+#ifndef _UNICODE
+	wchar_t szExeFileW[MAX_PATH];
+#endif
 
     hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (hProcessSnap == INVALID_HANDLE_VALUE)
@@ -59,7 +64,12 @@ static bool ProcessByName(wchar_t* wcProcessFileName, bool kill) {
         return false;
     }
     do {
+#ifdef _UNICODE
         if (!wcscmp(pe32.szExeFile, wcProcessFileName)) {
+#else
+		mbstowcs(szExeFileW, pe32.szExeFile, MAX_PATH);
+        if (!wcscmp(szExeFileW, wcProcessFileName)) {
+#endif
             if (kill) {
                 hProcess = OpenProcess(PROCESS_TERMINATE, 0, pe32.th32ProcessID);
                 TerminateProcess(hProcess, 0);
@@ -130,8 +140,8 @@ extern "C" EXPORT void addPVList(sStringArrayHdl* PVList) {
     iListCount = (**PVList)->dimSize;
     pszNameList = (char**)realloc(pszNameList, iListCount * sizeof(char*));
     for (size_t i = 0; i < iListCount; i++) {
-        pszNameList[i] = (char*)malloc(MAX_STRING_SIZE * sizeof(char));
-        memset(pszNameList[i], 0, MAX_STRING_SIZE);
-        memcpy_s(pszNameList[i], MAX_STRING_SIZE, (**((***PVList).elt)[i]).str, (**((***PVList).elt)[i]).cnt);
+        pszNameList[i] = (char*)malloc(MAX_NAME_SIZE * sizeof(char));
+        memset(pszNameList[i], 0, MAX_NAME_SIZE);
+        memcpy_s(pszNameList[i], MAX_NAME_SIZE, (**((***PVList).elt)[i]).str, (**((***PVList).elt)[i]).cnt);
     }
 }
