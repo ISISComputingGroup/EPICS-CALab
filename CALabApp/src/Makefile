@@ -13,9 +13,13 @@ SRC_DIRS += $(TOP)/caLab_1505/src
 LIBRARY_IOC += caLab caLabIoc
 
 ifeq (WIN32,$(OS_CLASS))
+ifneq ($(findstring windows,$(EPICS_HOST_ARCH)),)
 LABVIEWDIR=$(subst /,\,$(ICPBINARYDIR)/LabVIEW/2010_x64)
 else
-LABVIEWDIR=$(ICPBINARYDIR)/Labview
+LABVIEWDIR=$(subst /,\,$(ICPBINARYDIR)/LabVIEW/2016_x86)
+endif
+else
+LABVIEWDIR=$(subst /,\,$(ICPBINARYDIR)/LabVIEW/2016_x86)
 endif
 
 USR_CXXFLAGS_WIN32 += -DCALAB_EXPORTS -DWIN32 -I$(LABVIEWDIR)/cintools
