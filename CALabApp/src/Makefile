@@ -8,7 +8,7 @@ include $(TOP)/configure/CONFIG
 #==================================================
 # build a support library
 
-SRC_DIRS += $(TOP)/caLab_1505/src
+SRC_DIRS += $(TOP)/caLab_src/src
 
 LIBRARY_IOC += caLab caLabIoc
 
