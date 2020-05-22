@@ -24,7 +24,7 @@
 #include <TlHelp32.h>
 #include <stdio.h>
 #include <dbDefs.h>
-#define MAX_NAME_SIZE (PVNAME_STRINGSZ) /* from EPICS base dbDefs.h  */ 
+
 #ifdef WIN32
 #define EXPORT __declspec(dllexport)
 #else
@@ -140,8 +140,8 @@ extern "C" EXPORT void addPVList(sStringArrayHdl* PVList) {
     iListCount = (**PVList)->dimSize;
     pszNameList = (char**)realloc(pszNameList, iListCount * sizeof(char*));
     for (size_t i = 0; i < iListCount; i++) {
-        pszNameList[i] = (char*)malloc(MAX_NAME_SIZE * sizeof(char));
-        memset(pszNameList[i], 0, MAX_NAME_SIZE);
-        memcpy_s(pszNameList[i], MAX_NAME_SIZE, (**((***PVList).elt)[i]).str, (**((***PVList).elt)[i]).cnt);
+        pszNameList[i] = (char*)malloc(PVNAME_STRINGSZ * sizeof(char));
+        memset(pszNameList[i], 0, PVNAME_STRINGSZ);
+        memcpy_s(pszNameList[i], PVNAME_STRINGSZ, (**((***PVList).elt)[i]).str, (**((***PVList).elt)[i]).cnt);
     }
 }
